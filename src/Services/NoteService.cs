@@ -25,5 +25,10 @@ namespace simple_api.src.Services
         public void AddNote(Note note){
             _notesCollection.InsertOne(note);
         }
+
+        public async Task UpdateNoteAsync(string id, Note updatedNote)
+        {
+            await _notesCollection.ReplaceOneAsync(note => note.Id == id, updatedNote);
+        }
      }
 }

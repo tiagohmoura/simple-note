@@ -43,5 +43,21 @@ namespace simple_api.src.API.Controllers
             _noteService.AddNote(note);
             return CreatedAtAction(nameof(Get), new {id = note.Id}, note);
         }
+
+        //PUT: api/Notes/{id}
+        [HttpPut("{id:length(24)}")]
+        public async Task<IActionResult> UpadateNote(string id, [FromBody] Note updatedNote){
+            var existingNote = await _noteService.GetNoteById(id);
+
+            if(existingNote == null){
+                return NotFound(new { message = $"Note with id '{id}' not found." });
+            }
+
+            updatedNote.Id = existingNote.Id;
+
+            await _noteService.UpdateNoteAsync(id, updatedNote);
+
+            return NoContent();
+        }
     }
 }
