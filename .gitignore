@@ -1,0 +1,72 @@
+# Ignore arquivos binários de build
+[Bb]in/
+[Oo]bj/
+
+# Ignore pacotes NuGet
+*.nupkg
+# pastas do NuGet
+**/packages
+# pacotes NuGet em .NET core
+*.snupkg
+
+# Arquivos de configuração do Visual Studio
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Arquivos de configuração do Rider
+.idea/
+*.sln.iml
+
+# Arquivos de Log
+*.log
+logs/
+
+# Arquivos de build do VS Code
+.vscode/
+.vscode/*
+
+# Pastas de dependências
+node_modules/
+wwwroot/lib/
+libman.json
+
+# Arquivos de configuração de ambiente
+.env
+.env.*
+
+# Pastas de configuração de contêiner
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+
+# Certificados de Desenvolvimento SSL
+*.pfx
+*.p12
+
+# Configurações de User Secrets (em caso de uso de secrets.json)
+secrets.json
+
+# Arquivos de saída
+*.dll
+*.exe
+*.app
+*.dylib
+*.so
+*.pdb
+
+# Arquivos de lock
+project.lock.json
+project.fragment.lock.json
+
+# Arquivos de configuração do Mono Auto Generated
+mono_crash.*
+
+# Arquivos de backup
+*.bak
+*.swp
+
+# Arquivos de dados do MongoDB (caso seja local)
+data/db/
