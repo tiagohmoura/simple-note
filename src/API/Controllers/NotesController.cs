@@ -23,6 +23,16 @@ namespace simple_api.src.API.Controllers
             return Ok(notes);
         }
 
+        //GET: api/Notes{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetNoteById(string id){
+            var note = await _noteService.GetNoteById(id);
+            if(note == null){
+                return NotFound();
+            }
+            return Ok(note);
+        }
+
         //POST: api/Notes
         [HttpPost]
         public IActionResult Create(Note note){

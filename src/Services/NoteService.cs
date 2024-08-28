@@ -17,6 +17,11 @@ namespace simple_api.src.Services
             return await _notesCollection.Find(note => true).ToListAsync();
         }
 
+        public async Task<Note> GetNoteById(string id){
+            var note = await _notesCollection.Find<Note>(note => note.Id == id).FirstOrDefaultAsync();
+            return note;
+        }
+
         public void AddNote(Note note){
             _notesCollection.InsertOne(note);
         }
