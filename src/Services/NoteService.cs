@@ -7,23 +7,22 @@ namespace simple_api.src.Services
     {
         private readonly IMongoCollection<Note> _notesCollection;
 
-        public NoteService(IMongoClient mongoClient)
+        public NoteService(IMongoCollection<Note> notesCollection)
         {
-            var database = mongoClient.GetDatabase("notes-db");
-            _notesCollection = database.GetCollection<Note>("note");
+            _notesCollection = notesCollection ?? throw new ArgumentNullException(nameof(notesCollection));
         }
 
         public async Task<List<Note>> GetNotesAsync(){
             return await _notesCollection.Find(note => true).ToListAsync();
         }
 
-        public async Task<Note> GetNoteById(string id){
+        public virtual async Task<Note> GetNoteByIdAsync(string id){
             var note = await _notesCollection.Find<Note>(note => note.Id == id).FirstOrDefaultAsync();
             return note;
         }
 
-        public void AddNote(Note note){
-            _notesCollection.InsertOne(note);
+        public async Task AddNoteAsync(Note note){
+            await _notesCollection.InsertOneAsync(note);
         }
 
         public async Task UpdateNoteAsync(string id, Note updatedNote)

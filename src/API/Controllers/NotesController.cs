@@ -25,8 +25,8 @@ namespace simple_api.src.API.Controllers
 
         //GET: api/Notes{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetNoteById(string id){
-            var note = await _noteService.GetNoteById(id);
+        public async Task<IActionResult> GetNoteByIdAsync(string id){
+            var note = await _noteService.GetNoteByIdAsync(id);
             if(note == null){
                 return NotFound();
             }
@@ -40,14 +40,14 @@ namespace simple_api.src.API.Controllers
                 return BadRequest("Note cannot be null");
             }
 
-            _noteService.AddNote(note);
+            _noteService.AddNoteAsync(note);
             return CreatedAtAction(nameof(Get), new {id = note.Id}, note);
         }
 
         //PUT: api/Notes/{id}
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> UpadateNote(string id, [FromBody] Note updatedNote){
-            var existingNote = await _noteService.GetNoteById(id);
+            var existingNote = await _noteService.GetNoteByIdAsync(id);
 
             if(existingNote == null){
                 return NotFound(new { message = $"Note with id '{id}' not found." });
