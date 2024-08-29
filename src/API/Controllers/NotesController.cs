@@ -1,6 +1,12 @@
 using simple_api.src.Services;
 using simple_api.src.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace simple_api.src.API.Controllers
 {
@@ -16,6 +22,7 @@ namespace simple_api.src.API.Controllers
         }
 
         // GET: api/Notes
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -24,6 +31,7 @@ namespace simple_api.src.API.Controllers
         }
 
         //GET: api/Notes{id}
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNoteByIdAsync(string id){
             var note = await _noteService.GetNoteByIdAsync(id);
@@ -34,6 +42,7 @@ namespace simple_api.src.API.Controllers
         }
 
         //POST: api/Notes
+        [Authorize]
         [HttpPost]
         public IActionResult Create(Note note){
             if(note == null){
@@ -45,6 +54,7 @@ namespace simple_api.src.API.Controllers
         }
 
         //PUT: api/Notes/{id}
+        [Authorize]
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> UpadateNote(string id, [FromBody] Note updatedNote){
             var existingNote = await _noteService.GetNoteByIdAsync(id);
