@@ -1,5 +1,6 @@
 using simple_api.src.API.Routes; 
 using simple_api.src.Services;
+using simple_api.src.API.Models;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IMongoClient>(s => 
-    new MongoClient(builder.Configuration.GetConnectionString("MongoDb")));
+// Configure MongoDB
+builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+{
+    var settings = builder.Configuration.GetConnectionString("MongoDB");
+    return new MongoClient(settings);
+});
+
+builder.Services.AddScoped<IMongoCollection<Note>>(serviceProvider =>
+{
+    var client = serviceProvider.GetRequiredService<IMongoClient>();
+    var database = client.GetDatabase("notes-db");
+    return database.GetCollection<Note>("note");
+});
+
 builder.Services.AddScoped<NoteService>();
 
 var app = builder.Build();
